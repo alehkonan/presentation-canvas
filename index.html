@@ -16,8 +16,832 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section data-state="make-it-pop">
+					<h1>Canvas</h1>
+					<a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API">Canvas API on MDN</a>
+				</section>
+
+				<section>
+					<section>
+						<h2>What is it used for?</h2>
+					</section>
+					<section>
+						<h4>drawing graphics</h4>
+						<img src="./assets//canvas-graphics.png" alt="graphics" width="400">
+					</section>
+					<section>
+						<h4>animation</h4>
+						<img src="./assets/canvas-animation.gif" alt="animation" width="400">
+					</section>
+					<section>
+						<h4>game graphics</h4>
+						<img src="./assets/mario-game.gif" alt="game" width="400">
+					</section>
+					<section>
+						<h4>data visualization</h4>
+						<img src="./assets/visualization.png" alt="visualization" width="600">
+					</section>
+					<section>
+						<h4>photo manipulation</h4>
+						<img src="./assets/photo-manipulation.png" alt="manipulation" width="600">
+					</section>
+					<section>
+						<h4>real-time video processing</h4>
+						<img src="./assets/real-time-processing.jpg" alt="processing" width="600">
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>When is it used?</h2>
+					</section>
+					<section>
+						<h4>What can we use else</h4>
+					</section>
+					<section>
+						<p>Document Object Model (DOM)</p>
+						<p class="fragment">Pros: ease-of-use</p>
+						<p class="fragment">Cons: inefficiency in terms of memory and rendering speed</p>
+						<aside class="notes">
+							<p>Not suited for complex graphics: memory-intensive and will result in slow rendering</p>
+							<p>Coarse control over rendering, animation, etc. Abstraction restricts customizability</p>
+						</aside>
+					</section>
+					<section>
+						<p>Scalable Vector Graphics (SVG)</p>
+						<p class="fragment">Pros: good for high-fidelity, large graphics</p>
+						<p class="fragment">Cons: bad to work with many graphics</p>
+					</section>
+					<section>
+						<p>HTML5 canvas</p>
+						<p class="fragment">Pros: fast and flexible, hardware acceleration, better than SVG for complex graphics</p>
+						<p class="fragment">Cons: less abstraction</p>
+						<aside class="notes">
+							<p>works on a pixel-level basis</p>
+							<p>Increased code complexity for animations, basic configurations etc.</p>
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>How to use?</h2>
+					</section>
+					<section>
+						<p>Create CanvasElement in HTML</p>
+						<pre>
+							<code><canvas id="canvas"></canvas></code>
+						</pre>
+						<div class="fragment">
+							<p>and then use it in JavaScript</p>
+							<pre>
+								<code class="hljs" data-trim>
+									const canvas = document.getElementById('canvas');
+								</code>
+							</pre>
+						</div>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Properties</h2>
+						<aside class="notes">
+							We can use all HTMLElement properties
+							default width value is 300, height is 150
+							and it`s not the same as style properties
+							theese props we will use as coordinates for making content
+						</aside>
+					</section>
+					<section>
+						<pre>width</pre>
+						<pre>height</pre>
+						<img class="fragment" src="./assets/canvas_context.gif" alt="coords">
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Methods</h2>
+					</section>
+					<section>
+						<pre>getContext(contextType, contextAttributes)</pre>
+						<pre class="fragment">toDataURL(type, encoderOptions)</pre>
+						<pre class="fragment">toBlob(callback, mimeType, qualityArgument)</pre>
+						<pre class="fragment">captureStream(frameRate)</pre>
+						<pre class="fragment">transferControlToOffscreen()</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Context</h2>
+					</section>
+					<section>
+						<pre>
+							<code class="javascript">const ctx = canvas.getContext('2d');</code>
+						</pre>
+						<img class="fragment" src="./assets/CanvasRenderingContext.png" alt="crc">
+						<aside class="notes">
+							<p>if the context identifier is not supported</p>
+							<p>or the canvas has already been set to a different context mode</p>
+							<p>this method will return <strong>null</strong></p>
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Drawing shapes with canvas</h2>
+					</section>
+					<section>
+						<h4 data-id="code-title">rectangles</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.fillRect(25, 25, 100, 100);
+									ctx.clearRect(45, 45, 60, 60);
+									ctx.strokeRect(50, 50, 50, 50);
+								}
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h4 data-id="code-title">paths, lines and movings</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.beginPath();
+									ctx.moveTo(0, 50);
+									ctx.lineTo(50, 0);
+									ctx.lineTo(100, 50);
+									ctx.closePath();
+									ctx.stroke();
+								}
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h4 data-id="code-title">arcs</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.arc(70, 70, 50, 0, Math.PI * 2);
+									ctx.stroke();
+								}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.beginPath();
+									ctx.moveTo(200, 20);
+									ctx.arcTo(200, 130, 50, 20, 10);
+									ctx.stroke();
+								}
+							</code>
+						</pre>
+						<img class="fragment" src="./assets/arcTo.png" alt="arcTo">
+					</section>
+
+					<section>
+						<h4 data-id="code-title">bezier and quadratic curves</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								ctx.quadraticCurveTo(25, 25, 25, 62.5);
+								ctx.bezierCurveTo(75, 37, 70, 25, 50, 25);
+							</code>
+						</pre>
+						<img src="./assets/canvas_curves.png" alt="canvas_curves">
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Path2D objects</h2>
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								const rectangle = new Path2D();
+								rectangle.rect(10, 10, 50, 50);
+
+								const circle = new Path2D();
+								circle.arc(100, 35, 25, 0, 2 * Math.PI);
+
+								ctx.stroke(rectangle);
+								ctx.fill(circle);
+
+								const p = new Path2D('M10 10 h 80 v 80 h -80 Z');
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>styles and colors</h2>
+					</section>
+
+					<section>
+						<h4>Colors</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								ctx.fillStyle = 'orange';
+								ctx.fillStyle = '#FFA500';
+								ctx.fillStyle = 'rgb(255, 165, 0)';
+								ctx.fillStyle = 'rgba(255, 165, 0, 1)';
+							</code>
+						</pre>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								ctx.strokeStyle = 'orange';
+								ctx.strokeStyle = '#FFA500';
+								ctx.strokeStyle = 'rgb(255, 165, 0)';
+								ctx.strokeStyle = 'rgba(255, 165, 0, 1)';
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h4>gradient and patterns</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								const lineargradient = ctx.createLinearGradient(0, 0, 150, 150);
+								lineargradient.addColorStop(0, 'white');
+								lineargradient.addColorStop(1, 'black');
+								ctx.fillStyle = lineargradient;
+							</code>
+						</pre>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								const img = new Image();
+								img.src = 'someimage.png';
+								const pattern = ctx.createPattern(img, 'repeat');
+								ctx.fillStyle = pattern;
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h4>Transparency</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								ctx.globalAlpha = 1; // default
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h4>Line styles</h4>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.lineWidth = 1; // default
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.lineCap = "butt" || "round" || "square"; // butt is default
+							</code>
+						</pre>
+						<img src="./assets/Canvas_linecap.png" alt="Canvas_linecap">
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.lineJoin = "round" || "bevel" || "miter"; // miter is default
+							</code>
+						</pre>
+						<img src="./assets/Canvas_linejoin.png" alt="Canvas_linejoin">
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.miterLimit = 1; // 10 is default
+							</code>
+						</pre>
+						<img src="./assets/Canvas_miterlimit.png" alt="Canvas_miterlimit">
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.setLineDash([]);
+								ctx.setLineDash([1, 1]);
+							</code>
+						</pre>
+						<img src="./assets/dashes.png" alt="dashes">
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.lineDashOffset = 4; // default is 0.0
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h4>Shadows</h4>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.shadowOffsetX = 0; // default value
+								ctx.shadowOffsetY = 0; // default value
+								ctx.shadowBlur = 0; // default value
+								ctx.shadowColor = 'black'; // default value
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Drawing text</h2>
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.font = '10px sans-serif';
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.textAlign = 'start'; // default
+								ctx.textAlign = 'end';
+								ctx.textAlign = 'left';
+								ctx.textAlign = 'center';
+								ctx.textAlign = 'right';
+							</code>
+						</pre>
+						<img class="fragment" src="./assets/alienation.png" alt="alienation">
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.textBaseline = 'top';
+								ctx.textBaseline = 'hanging';
+								ctx.textBaseline = 'middle';
+								ctx.textBaseline = 'alphabetic'; // default
+								ctx.textBaseline = 'ideographic';
+								ctx.textBaseline = 'bottom';
+							</code>
+						</pre>
+						<img class="fragment" src="./assets/baseline.png" alt="baseline" width="300">
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.direction = 'ltr';
+								ctx.direction = 'rtl';
+								ctx.direction = 'inherit'; // default
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.font = '40px serif';
+									ctx.fillText('Hello world', 10, 50);
+									ctx.strokeText('Hello world', 10, 50);
+								}
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Using images</h2>
+						<aside class="notes">
+							We can use HTMLImageElement, SVGImageElement, HTMLVideoElement and another HTMLCanvasElement
+						</aside>
+					</section>
+
+					<section>
+						<h4 data-id="code-title">Drawing images</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.drawImage(image, dx, dy);
+									ctx.drawImage(image, dx, dy, dWidth, dHeight);
+									ctx.drawImage(image, sx, sy, sWidth, sHeight, 
+																dx, dy, dWidth, dHeight);
+								}
+							</code>
+						</pre>
+						<img src="./assets/canvas_drawimage.jpg" alt="canvas_drawimage">
+						<aside class="notes">
+							1) We use the whole image
+							2) We can scale the initial image
+							3) We can slice image
+						</aside>
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.imageSmoothingEnabled = false; // default true
+							</code>
+						</pre>
+						<img src="./assets/smooth.png" alt="smooth">
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Transformations</h2>
+					</section>
+
+					<section>
+						<h4 data-id="code-title">Saving and restoring state</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.save();
+									ctx.fillStyle = '#09F';
+									ctx.restore();
+								}
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h4 data-id="code-title">Translating</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.save();
+									ctx.translate(x, y);
+									ctx.fillRect(0, 0, 25, 25);
+									ctx.restore();
+								}
+							</code>
+						</pre>
+						<img src="./assets/canvas_grid_translate.png" alt="translate">
+					</section>
+
+					<section>
+						<h4 data-id="code-title">Rotating</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.save();
+									ctx.rotate((Math.PI / 180) * 25);
+									ctx.fillRect(0, 0, 25, 25);
+									ctx.restore();
+								}
+							</code>
+						</pre>
+						<img src="./assets/canvas_grid_rotate.png" alt="rotate">
+					</section>
+
+					<section>
+						<h4 data-id="code-title">Scaling</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.save();
+									ctx.scale(9, 3);
+									ctx.fillRect(0, 0, 25, 25);
+									ctx.restore();
+								}
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<h4 data-id="code-title">Transforms</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									ctx.transform(1, .2, .8, 1, 0, 0);
+									ctx.fillRect(0, 0, 25, 25);
+								}
+							</code>
+						</pre>
+						<img class="fragment" src="./assets/transform.png" alt="transform">
+						<aside class="notes">
+							<ol>
+								<li>Horizontal scaling</li>
+								<li>Vertical skewing</li>
+								<li>Horizontal skewing</li>
+								<li>Vertical scaling</li>
+								<li>Horizontal translation</li>
+								<li>Vertical translation</li>
+							</ol>
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Compositing and clipping</h2>
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								ctx.globalCompositeOperation = 'source-over'; // default
+							</code>
+						</pre>
+						<img src="./assets/source-over.png" alt="source">
+						<aside class="notes">
+							draws new shapes on top of the existing canvas content
+						</aside>
+					</section>
+
+					<section>
+						And much more types you can find on <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation">MDN</a>
+					</section>
+
+					<section>
+						<h4 data-id="code-title">Clipping paths</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								function draw() {
+									const path = new Path2D();
+									path.arc(150, 75, 50, 0, Math.PI * 2);
+									ctx.clip(path);
+									ctx.fillRect(0, 0, 300, 150);
+								}
+							</code>
+						</pre>
+						<img class="fragment" src="./assets/canvas_clipping_path.png" alt="clip">
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>animations</h2>
+					</section>
+
+					<section>
+						<h4>Steps you need to take to draw a frame</h4>
+						<ol>
+							<li>Clear the canvas</li>
+							<li>Save the canvas state</li>
+							<li>Draw animated shapes</li>
+							<li>Restore the canvas state</li>
+						</ol>
+						<aside class="notes">
+							the easiest is to use clearRect()
+							If you're changing any setting
+						</aside>
+					</section>
+
+					<section>
+						<h4>Scheduled updates</h4>
+						<ul>
+							<li>setInterval(function, delay)</li>
+							<li>setTimeout(function, delay)</li>
+							<li>requestAnimationFrame(callback)</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>If you don't want any user interaction you can use the setInterval()</li>
+								<li>If we wanted to make a game we can use setTimeout</li>
+								<li>requestAnimationFrame is smoother and more efficient way</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<img src="./assets/Animations_with_HTML5.gif" alt="anim" width="600">
+					</section>
+
+					<section>
+						<h4 data-id="code-title">Simple example</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers="1-5|7-21|14-20|23-38|24|25|26-33|34,35|36,39">
+								const canvas = document.getElementById('canvas');
+								canvas.width = 800;
+								canvas.height = 500;
+								const ctx = canvas.getContext('2d');
+								let raf;
+
+								const ball = {
+									x: 100,
+									y: 100,
+									vx: 5,
+									vy: 2,
+									radius: 25,
+									color: 'blue',
+									draw: function() {
+										ctx.beginPath();
+										ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, true);
+										ctx.closePath();
+										ctx.fillStyle = this.color;
+										ctx.fill();
+									}
+								}
+
+								function draw() {
+									ctx.clearRect(0, 0, canvas.width, canvas.height);
+									ball.draw();
+									if (ball.y + ball.vy > canvas.height || 
+											ball.y + ball.vy < 0) {
+										ball.vy = -ball.vy;
+									}
+									if (ball.x + ball.vx > canvas.width || 
+											ball.x + ball.vx < 0) {
+										ball.vx = -ball.vx;
+									}
+									ball.x += ball.vx;
+									ball.y += ball.vy;
+									raf = requestAnimationFrame(draw)
+								}
+
+								raf = requestAnimationFrame(draw)
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<img src="./assets/ball.gif" alt="ball">
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Pixel manipulation</h2>
+					</section>
+
+					<section>
+						<h4>Getting and putting the pixel data</h4>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								ctx.fillStyle = 'red';
+								ctx.fillRect(0, 0, canvas.width, canvas.height);
+							</code>
+						</pre>
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim>
+								const image = ctx.getImageData(0, 0, canvas.width, canvas.height);
+							</code>
+						</pre>
+						<img class="fragment" src="./assets/before.png" alt="before">
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								for (let i = 0; i < image.data.length; i += 4) {
+									image.data[i] = 100;
+									image.data[i + 1] = 125;
+									image.data[i + 2] = 255;
+									image.data[i + 3] = 100;
+								}
+								ctx.putImageData(image, 0, 0);
+							</code>
+						</pre>
+						<img class="fragment" src="./assets/after.png" alt="after">
+					</section>
+
+					<section>
+						<h4>Saving images</h4>
+						<pre>
+							<code class="javascript">const data = canvas.toDataURL();</code>
+						</pre>
+						<img class="fragment" src="./assets/dataURL.png" alt="dataURL">
+					</section>
+
+					<section>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								canvas.toBlob((blob) => {
+									const newImage = document.createElement('img');
+									const url = URL.createObjectURL(blob);
+									newImage.onload = () => {
+										URL.revokeObjectURL(url);
+									}
+									newImage.src = url;
+									document.body.appendChild(newImage);
+								}, 'image/png', 1);
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<pre>
+							<code class="javascript">const ctx = canvas.getContext('webgl');</code>
+						</pre>
+						<img class="fragment" src="./assets/WebGLContent.png" alt="webgl">
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<pre>
+							<code class="javascript">const stream = canvas.captureStream(25); // 25 FPS</code>
+						</pre>
+						<img class="fragment" src="./assets/stream.png" alt="stream">
+						<aside class="notes">
+							<p>If it`s not a new frame will be captured each time the canvas changes</p>
+							<p>if set to 0, frames will not be captured automatically</p>
+							<p>We can capture it with track`s methos <code>requestFrame()</code></p>
+						</aside>
+					</section>
+					<section>
+						<pre>
+							<code class="javascript">const tracks = stream.getTracks();</code>
+						</pre>
+						<img class="fragment" src="./assets/tracks.png" alt="tracks">
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>OffScreenCanvas</h2>
+						<aside class="notes">
+							a canvas that can be rendered off screen
+						</aside>
+					</section>
+					<section>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								const offscreen = canvas.transferControlToOffscreen();
+								const worker = new Worker("offscreencanvas.js");
+								worker.postMessage({canvas: offscreen}, [offscreen]);
+							</code>
+						</pre>
+						<aside class="notes">
+							it is possible to run a script operation in a background thread separate from the main execution thread of a web application
+						</aside>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<pre>
+							<code class="javascript">const ctx = canvas.getContext('bitmaprenderer');</code>
+						</pre>
+						<img class="fragment" src="./assets/ImageBitmapRenderer.png" alt="bitmap">
+					</section>
+					<section>
+						<pre>
+							<code class="hljs" data-trim data-line-numbers>
+								const ctx = canvas.getContext('bitmaprenderer');
+								const offscreen = new OffscreenCanvas(256, 256);
+								const gl = offscreen.getContext('webgl');
+								// ... some drawing for the HTML canvas using the gl context ...
+								const bitmap = offscreen.transferToImageBitmap();
+								canvas.transferFromImageBitmap(bitmap);
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>
+							Optimizing canvas
+						</h2>
+					</section>
+					<section>
+						<ul>
+							<li>Pre-render similar primitives or repeating objects on an offscreen canvas</li>
+							<li class="fragment">Avoid floating-point coordinates and use integers instead</li>
+							<li class="fragment">Don’t scale images in drawImage</li>
+							<li class="fragment">Use multiple layered canvases for complex scenes</li>
+							<li class="fragment">Use plain CSS for large background images</li>
+							<li class="fragment">Scaling canvas using CSS transforms</li>
+							<li class="fragment">Turn off transparency</li>
+						</ul>
+						<aside class="notes">
+							<ul>
+								<li>consider offloading repeating oiperations to an offscreen canvas</li>
+								<li>Avoid floating-point coordinates and use integers instead</li>
+								<li>Cache various sizes of your images on an offscreen canvas</li>
+								<li>background-layer, game-layer, ui-layer</li>
+								<li>like div</li>
+							</ul>
+						</aside>
+					</section>
+				</section>
+				
 			</div>
 		</div>
 
